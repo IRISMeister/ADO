@@ -5,7 +5,7 @@
 ADO.exe SleepTime(ms) host port
 
 ```
-> ADO.exe 100 192.168.11.2 51774
+> ADO.exe 100 192.168.11.2 1972
 ```
 
 ## how to forward wsl2 port to an external host.
