@@ -40,6 +40,7 @@ namespace ADO
             String sqlStatement = "DROP TABLE People";
             String sqlStatementa = "DROP TABLE People2";
             String sqlStatementb = "DROP TABLE People3";
+            String sqlStatement2 = "CREATE INDEX idx1 ON TABLE People (p0)";
 
             var sqlStatement1 = new StringBuilder();
             tablename = "People"; sqlStatement1.AppendLine($"CREATE TABLE {tablename} (t varchar(50), p0 int, p1 int ");
@@ -59,13 +60,14 @@ namespace ADO
 
             IRISCommand cmd = new IRISCommand(sqlStatement, IRISConnect);
             IRISCommand cmd1 = new IRISCommand(sqlStatement1.ToString(), IRISConnect);
+            IRISCommand cmd2 = new IRISCommand(sqlStatement2.ToString(), IRISConnect);
             try
             {
                 cmd.ExecuteNonQuery();
             }
             catch (Exception e) { Console.WriteLine("{0} Exception caught.", e); }
-
             cmd1.ExecuteNonQuery();
+            cmd2.ExecuteNonQuery();
 
 
             cmd = new IRISCommand(sqlStatementa, IRISConnect);
@@ -86,8 +88,11 @@ namespace ADO
             catch (Exception e) { Console.WriteLine("{0} Exception caught.", e); }
             cmd1.ExecuteNonQuery();
 
+
+
             cmd.Dispose();
             cmd1.Dispose();
+            cmd2.Dispose();
             IRISConnect.Close();
 
             MainJob mainJob = new(ConnectionString, sleeptime);
@@ -95,6 +100,7 @@ namespace ADO
             {
                 mainJob.Exec(data,r);
                 if (sleeptime > 0) Thread.Sleep(sleeptime);
+                GC.Collect();
             }
 
             //wait last job to finish

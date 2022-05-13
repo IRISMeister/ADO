@@ -11,7 +11,6 @@ namespace ADO
         private String connstr = null;
         private int columncount = 50;
         private int sleeptime = 10;
-        DateTime t;
 
 
         private void HeavyMethod(double[] data,int seq)
@@ -19,6 +18,8 @@ namespace ADO
 
             String tablename = "";
             long reccnt;
+            DateTime t;
+            int totalSeconds;
 
 
             IRISConnection IRISConnect = new IRISConnection();
@@ -41,7 +42,7 @@ namespace ADO
             for (int cnt = 2; cnt <= columncount; cnt++) sqlInsert3.Append(",?");
             sqlInsert3.AppendLine(")");
 
-            String queryString = "SELECT count(*) FROM People";
+            String queryString = "SELECT count(*) FROM People where p0>=? and p0<?";
             //String queryString = "SELECT count(*) FROM People where ID=1";
 
 
@@ -64,9 +65,10 @@ namespace ADO
 
             t = DateTime.Now;
             timestampstring = String.Format("{0:HH:mm:ss.fff}", t);
+            totalSeconds = (int)(t.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             cmdInsert.Parameters.Clear();
             cmdInsert.Parameters.Add("@t", System.Data.SqlDbType.Int).Value = t;
-            cmdInsert.Parameters.Add("@p0", System.Data.SqlDbType.Int).Value = (int)(t.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+            cmdInsert.Parameters.Add("@p0", System.Data.SqlDbType.Int).Value = totalSeconds;
             cmdInsert.Parameters.Add("@p1", System.Data.SqlDbType.Int).Value = seq;
             for (int cnt = 2; cnt <= columncount; cnt++) { cmdInsert.Parameters.Add($"@p{cnt}", System.Data.SqlDbType.Float).Value = seq * 0.1; }
             cmdInsert.ExecuteNonQuery();
@@ -83,11 +85,15 @@ namespace ADO
 
 
             //ExecuteReader() is used for SELECT
+            cmdQuery.Parameters.Clear();
+            cmdQuery.Parameters.Add("@p1", System.Data.SqlDbType.Int).Value = totalSeconds - 1; 
+            cmdQuery.Parameters.Add("@p2", System.Data.SqlDbType.Int).Value = totalSeconds ;
             IRISDataReader Reader = cmdQuery.ExecuteReader();
 
             while (Reader.Read())
             {
                 reccnt = Reader.GetInt64(0);
+                Console.WriteLine(reccnt);
             }
 
             Reader.Close();
