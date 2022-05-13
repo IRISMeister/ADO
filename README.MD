@@ -9,11 +9,21 @@ ADO.exe SleepTime(ms) host port
 ```
 
 ## 結果
-Windows10 Client PCから遠隔のIRISサーバに対して実行。
+Windows10 Client PCから遠隔のWindows10ホスト上のIRISサーバに対して実行。
+> 使用環境は計測に「理想」とは言えない環境。通信は無線LAN経由。クライアント、サーバ共にセキュリティ対策ソフトあり。
 
-Windows版IRISの場合の[実行結果](results/sleep100-win.txt)
-コンテナ版(同Windows上のWSL2)の場合の[実行結果](results/sleep100-docker.txt)
+|IRIS環境|計測値|備考|
+|:---|:---|:---|
+|Windows版IRIS|[実行結果](results/sleep100-win.txt)||
+|コンテナ版(同Windows上のWSL2)|[実行結果](results/sleep100-docker.txt)||
 
+Windows版散布図
+
+![Windows版散布図](results/sleep100-docker.png)|
+
+コンテナ版散布図
+
+![コンテナ版散布図](results/sleep100-docker.png)|
 ## how to forward wsl2 port to an external host.
 
 ```

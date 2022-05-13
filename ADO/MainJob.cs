@@ -97,9 +97,6 @@ namespace ADO
             for (int cnt = 2; cnt <= columncount; cnt++) { cmdInsert3.Parameters.Add($"@p{cnt}", System.Data.SqlDbType.Float).Value = seq * 0.1; }
             cmdInsert3.ExecuteNonQuery();
 
-
-            //GC.Collect();
-
             cmdInsert.Dispose();
             cmdInsert2.Dispose();
             cmdInsert3.Dispose();
