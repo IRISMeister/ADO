@@ -93,7 +93,6 @@ namespace ADO
             while (Reader.Read())
             {
                 reccnt = Reader.GetInt64(0);
-                Console.WriteLine(reccnt);
             }
 
             Reader.Close();
