@@ -1,4 +1,9 @@
 # ADO
+## 環境
+
+IRIS データベースバッファサイズ: 2048MB  
+Windows版:IRIS for Windows (x86-64) 2021.2.1 (Build 654U) Fri Mar 18 2022 06:09:35 EDT  
+コンテナ版:IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2021.2 (Build 651U) Mon Jan 31 2022 18:07:01 EST
 
 ## 実行方法
 
@@ -9,8 +14,9 @@ ADO.exe SleepTime(ms) host port
 ```
 
 ## 結果
-Windows10 Client PCから遠隔のWindows10ホスト上のIRISサーバに対して実行。
-> 使用環境は計測に「理想」とは言えない環境。通信は無線LAN経由。クライアント、サーバ共にセキュリティ対策ソフトあり。
+Windows10ホスト(ADO Client用)から物理的に別のWindows10ホスト上のIRISサーバに対して実行。
+> (注意)使用環境は計測に「理想」とは言えない環境なので、傾向を把握することが目的としている。  
+> 通信はWi-Fi経由。クライアント、サーバ共にセキュリティ対策ソフトあり。
 
 |IRIS環境|計測値|備考|
 |:---|:---|:---|
@@ -19,7 +25,7 @@ Windows10 Client PCから遠隔のWindows10ホスト上のIRISサーバに対し
 
 Windows版散布図
 
-![Windows版散布図](results/sleep100-docker.png)|
+![Windows版散布図](results/sleep100-win.png)|
 
 コンテナ版散布図
 

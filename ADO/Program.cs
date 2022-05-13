@@ -17,6 +17,7 @@ namespace ADO
             String password = "SYS";
             String Namespace = "USER";
 
+            String errstr;
             int loopcnt = 5000;
             int columncount = 50;
             int sleeptime = 10;
@@ -65,7 +66,7 @@ namespace ADO
             {
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception e) { Console.WriteLine("{0} Exception caught.", e); }
+            catch (Exception e) { errstr=e.ToString(); }
             cmd1.ExecuteNonQuery();
             cmd2.ExecuteNonQuery();
 
@@ -75,8 +76,8 @@ namespace ADO
             try
             {
                 cmd.ExecuteNonQuery();
-            } 
-            catch (Exception e) { Console.WriteLine("{0} Exception caught.", e);  }
+            }
+            catch (Exception e) { errstr = e.ToString(); }
             cmd1.ExecuteNonQuery();
 
             cmd = new IRISCommand(sqlStatementb, IRISConnect);
@@ -85,7 +86,7 @@ namespace ADO
             {
                 cmd.ExecuteNonQuery();
             }
-            catch (Exception e) { Console.WriteLine("{0} Exception caught.", e); }
+            catch (Exception e) { errstr = e.ToString(); }
             cmd1.ExecuteNonQuery();
 
 
