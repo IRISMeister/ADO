@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ADO": {
+      "commandName": "Project",
+      "commandLineArgs": "100 192.168.11.2 51774"
+    }
+  }
+}
