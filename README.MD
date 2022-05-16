@@ -1,12 +1,13 @@
 # ADO
 ## 環境
 
-IRIS データベースバッファサイズ: 2048MB  
+IRIS データベースバッファサイズ: 2048 MB  
 Windows版:IRIS for Windows (x86-64) 2021.2.1 (Build 654U) Fri Mar 18 2022 06:09:35 EDT  
 コンテナ版:IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2021.2 (Build 651U) Mon Jan 31 2022 18:07:01 EST
 
 ## 処理概要
 テーブルを3つ作成し、Loop内を指定回数分繰り返す。
+```
 DROP TABLE TestTable
 DROP TABLE TestTable2
 DROP TABLE TestTable3
@@ -19,6 +20,9 @@ Loop {
     SELECT COUNT(*) FROM INSERT TestTable WHERE ...
     INSERT TestTable3
 }
+```
+作成されるテーブルサイズはごく小さく、IRISのキャッシュメモリ(2048 MB)にすべて載る程度。
+
 
 ## 実行方法
 
