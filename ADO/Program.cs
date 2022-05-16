@@ -101,7 +101,7 @@ namespace ADO
             {
                 mainJob.Exec(data,r);
                 if (sleeptime > 0) Thread.Sleep(sleeptime);
-                GC.Collect();
+                //GC.Collect();
             }
 
             //wait last job to finish
