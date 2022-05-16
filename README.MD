@@ -30,7 +30,7 @@ ADO.exe SleepTime(ms) host port
 > ADO.exe 100 192.168.11.2 1972 > result.txt
 ```
 初回実行時は、クエリプランの作成、データベースの拡張などが伴う可能性があるため、2回目以降を計測すること。  
-ADO.exeの出力に加えて、ネットワークの影響等を受けない計測値として、IRISのSQL統計情報を使用する。そのために、1回目(あるいは今まで実行してきた結果)の統計情報を消去するために、1回目のADO.exe実行の直後に、下記手順にて、クエリの統計情報をクリアしておく。以下、手順。
+ADO.exeの出力に加えて、ネットワークの影響等を受けない計測値として、IRISの[SQL統計情報](https://docs.intersystems.com/iris20212/csp/docbook/DocBook.UI.Page.cls?KEY=GSQLOPT_sqlstmts#GSQLOPT_sqlstmts_det_statssec)を使用する。そのために、1回目(あるいは今まで実行してきた結果)の統計情報を消去するために、1回目のADO.exe実行の直後に、下記手順にて、クエリの統計情報をクリアしておく。以下、手順。
 
 1.  管理ポータルで[システムエクスプローラー]->[SQL]と進み、ネームスペースを使用しているデータベースに切り替え、さらに[SQLステートメント]タブを選択する。  
 ![sqlstat1](images/sqlstat1.png)|
