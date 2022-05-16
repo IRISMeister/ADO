@@ -2,3 +2,4 @@ ADO/bin
 ADO/obj
 .vs
 ADO/InterSystems.Data.IRISClient.dll
+SQLSTAT.MD

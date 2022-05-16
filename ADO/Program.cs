@@ -38,23 +38,23 @@ namespace ADO
 
             String tablename = "";
 
-            String sqlStatement = "DROP TABLE People";
-            String sqlStatementa = "DROP TABLE People2";
-            String sqlStatementb = "DROP TABLE People3";
-            String sqlStatement2 = "CREATE INDEX idx1 ON TABLE People (p0)";
+            String sqlStatement = "DROP TABLE TestTable";
+            String sqlStatementa = "DROP TABLE TestTable2";
+            String sqlStatementb = "DROP TABLE TestTable3";
+            String sqlStatement2 = "CREATE INDEX idx1 ON TABLE TestTable (sec)";
 
             var sqlStatement1 = new StringBuilder();
-            tablename = "People"; sqlStatement1.AppendLine($"CREATE TABLE {tablename} (t varchar(50), p0 int, p1 int ");
+            tablename = "TestTable"; sqlStatement1.AppendLine($"CREATE TABLE {tablename} (t varchar(50), sec int, p1 int ");
             for (int cnt=2; cnt<= columncount; cnt++) sqlStatement1.Append($",p{cnt} numeric(10,2)");
             sqlStatement1.AppendLine(")");
 
             var sqlStatement1a = new StringBuilder();
-            tablename = "People2"; sqlStatement1a.AppendLine($"CREATE TABLE {tablename} (p1 int ");
+            tablename = "TestTable2"; sqlStatement1a.AppendLine($"CREATE TABLE {tablename} (p1 int ");
             for (int cnt = 2; cnt <= columncount; cnt++) sqlStatement1a.Append($",p{cnt} numeric(10,2)");
             sqlStatement1a.AppendLine(")");
 
             var sqlStatement1b = new StringBuilder();
-            tablename = "People3"; sqlStatement1b.AppendLine($"CREATE TABLE {tablename} (p1 int ");
+            tablename = "TestTable3"; sqlStatement1b.AppendLine($"CREATE TABLE {tablename} (p1 int ");
             for (int cnt = 2; cnt <= columncount; cnt++) sqlStatement1b.Append($",p{cnt} numeric(10,2)");
             sqlStatement1b.AppendLine(")");
 

@@ -28,22 +28,22 @@ namespace ADO
 
 
             var sqlInsert = new StringBuilder();
-            tablename = "People"; sqlInsert.AppendLine($"INSERT INTO {tablename} VALUES (?,?,?");
+            tablename = "TestTable"; sqlInsert.AppendLine($"INSERT INTO {tablename} VALUES (?,?,?");
             for (int cnt = 2; cnt <= columncount; cnt++) sqlInsert.Append(",?");
             sqlInsert.AppendLine(")");
 
             var sqlInsert2 = new StringBuilder();
-            tablename = "People2"; sqlInsert2.AppendLine($"INSERT INTO {tablename} VALUES (?");
+            tablename = "TestTable2"; sqlInsert2.AppendLine($"INSERT INTO {tablename} VALUES (?");
             for (int cnt = 2; cnt <= columncount; cnt++) sqlInsert2.Append(",?");
             sqlInsert2.AppendLine(")");
 
             var sqlInsert3 = new StringBuilder();
-            tablename = "People3"; sqlInsert3.AppendLine($"INSERT INTO {tablename} VALUES (?");
+            tablename = "TestTable3"; sqlInsert3.AppendLine($"INSERT INTO {tablename} VALUES (?");
             for (int cnt = 2; cnt <= columncount; cnt++) sqlInsert3.Append(",?");
             sqlInsert3.AppendLine(")");
 
-            String queryString = "SELECT count(*) FROM People where p0>=? and p0<?";
-            //String queryString = "SELECT count(*) FROM People where ID=1";
+            String queryString = "SELECT count(*) FROM TestTable where sec>=? and sec<?";
+            //String queryString = "SELECT count(*) FROM TestTable where ID=1";
 
 
 
@@ -68,7 +68,7 @@ namespace ADO
             totalSeconds = (int)(t.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             cmdInsert.Parameters.Clear();
             cmdInsert.Parameters.Add("@t", System.Data.SqlDbType.Int).Value = t;
-            cmdInsert.Parameters.Add("@p0", System.Data.SqlDbType.Int).Value = totalSeconds;
+            cmdInsert.Parameters.Add("@sec", System.Data.SqlDbType.Int).Value = totalSeconds;
             cmdInsert.Parameters.Add("@p1", System.Data.SqlDbType.Int).Value = seq;
             for (int cnt = 2; cnt <= columncount; cnt++) { cmdInsert.Parameters.Add($"@p{cnt}", System.Data.SqlDbType.Float).Value = seq * 0.1; }
             cmdInsert.ExecuteNonQuery();
