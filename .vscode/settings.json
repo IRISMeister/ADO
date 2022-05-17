@@ -1,0 +1,7 @@
+{
+	"objectscript.conn": {
+		"server": "iris",
+		"ns": "USER",
+		"active": true
+	}
+}
