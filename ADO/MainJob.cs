@@ -12,7 +12,6 @@ namespace ADO
         private int columncount = 50;
         private int sleeptime = 10;
 
-
         private void AccessIRIS(double[] data,int seq)
         {
 
@@ -21,11 +20,9 @@ namespace ADO
             DateTime t;
             int totalSeconds;
 
-
             IRISConnection IRISConnect = new IRISConnection();
             IRISConnect.ConnectionString = connstr;
             IRISConnect.Open();
-
 
             var sqlInsert = new StringBuilder();
             tablename = "TestTable"; sqlInsert.AppendLine($"INSERT INTO {tablename} VALUES (?,?,?");
@@ -43,9 +40,6 @@ namespace ADO
             sqlInsert3.AppendLine(")");
 
             String queryString = "SELECT count(*) FROM TestTable where sec>=? and sec<?";
-            //String queryString = "SELECT count(*) FROM TestTable where ID=1";
-
-
 
             IRISCommand cmdInsert = new IRISCommand(sqlInsert.ToString(), IRISConnect);
             cmdInsert.Prepare();
@@ -112,7 +106,6 @@ namespace ADO
             IRISConnect.Close();
             IRISConnect.Dispose();
 
-
         }
 
         public void ExecSync(double[] data,int seq)
@@ -130,7 +123,5 @@ namespace ADO
             this.connstr = connstr;
             this.sleeptime = sleeptime;
         }
-
-
     }
 }

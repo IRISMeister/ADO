@@ -21,12 +21,13 @@ namespace ADO
             int loopcnt = 5000;
             int columncount = 50;
             int sleeptime = 10;
-            double[] data = new double[loopcnt];
 
             if (args.Length >= 1) sleeptime = Int32.Parse(args[0]);
             if (args.Length >= 2) host = args[1];
             if (args.Length >= 3) port = args[2];
+            if (args.Length >= 4) loopcnt = Int32.Parse(args[3]);
 
+            double[] data = new double[loopcnt];
 
             String ConnectionString = "Server = " + host
                 + "; Port = " + port + "; Namespace = " + Namespace
@@ -90,12 +91,15 @@ namespace ADO
             catch (Exception e) { errstr = e.ToString(); }
             cmd1.ExecuteNonQuery();
 
-
-
             cmd.Dispose();
             cmd1.Dispose();
             cmd2.Dispose();
             IRISConnect.Close();
+
+/*
+            MainJob2 mainJob = new(ConnectionString, sleeptime, loopcnt);
+            mainJob.ExecSync(data, 0);
+*/
 
             MainJob mainJob = new(ConnectionString, sleeptime);
             for (int r = 0; r < loopcnt; r++)
