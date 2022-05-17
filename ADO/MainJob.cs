@@ -13,7 +13,7 @@ namespace ADO
         private int sleeptime = 10;
 
 
-        private void HeavyMethod(double[] data,int seq)
+        private void AccessIRIS(double[] data,int seq)
         {
 
             String tablename = "";
@@ -73,6 +73,8 @@ namespace ADO
             for (int cnt = 2; cnt <= columncount; cnt++) { cmdInsert.Parameters.Add($"@p{cnt}", System.Data.SqlDbType.Float).Value = seq * 0.1; }
             cmdInsert.ExecuteNonQuery();
 
+            // Should check SQLCODE or status here....
+
             sw.Stop();
             ms = 1000.0 * sw.ElapsedTicks / Stopwatch.Frequency;
             Console.WriteLine(timestampstring + " " + sw.ElapsedTicks + " " + Stopwatch.Frequency + " " + ms);
@@ -113,12 +115,17 @@ namespace ADO
 
         }
 
-        public void Exec(double[] data,int seq)
+        public void ExecSync(double[] data,int seq)
         {
-            Task.Run(() => HeavyMethod(data,seq));
+            Task t=Task.Run(() => AccessIRIS(data,seq));
+            t.Wait();
+        }
+        public void Exec(double[] data, int seq)
+        {
+            Task.Run(() => AccessIRIS(data, seq));
         }
 
-       public MainJob(String connstr,int sleeptime)
+        public MainJob(String connstr,int sleeptime)
         {
             this.connstr = connstr;
             this.sleeptime = sleeptime;

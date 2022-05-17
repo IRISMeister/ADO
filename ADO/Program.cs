@@ -11,7 +11,7 @@ namespace ADO
         static void Main(string[] args)
         {
 
-            String host = "192.168.11.2";
+            String host = "localhost";
             String port = "1972";
             String username = "_SYSTEM";
             String password = "SYS";
@@ -42,6 +42,7 @@ namespace ADO
             String sqlStatementa = "DROP TABLE TestTable2";
             String sqlStatementb = "DROP TABLE TestTable3";
             String sqlStatement2 = "CREATE INDEX idx1 ON TABLE TestTable (sec)";
+            String sqlStatement3 = "select count(*) from TestTable";
 
             var sqlStatement1 = new StringBuilder();
             tablename = "TestTable"; sqlStatement1.AppendLine($"CREATE TABLE {tablename} (t varchar(50), sec int, p1 int ");
@@ -99,14 +100,33 @@ namespace ADO
             MainJob mainJob = new(ConnectionString, sleeptime);
             for (int r = 0; r < loopcnt; r++)
             {
-                mainJob.Exec(data,r);
-                if (sleeptime > 0) Thread.Sleep(sleeptime);
+                // Too few sleeptime creates lots of IRIS processes via connection pool mechanism.
+                if (sleeptime > 0)
+                {
+                    mainJob.Exec(data, r);
+                    Thread.Sleep(sleeptime);
+                }
+                else
+                {
+                    mainJob.ExecSync(data, r);
+                }
                 //GC.Collect();
             }
 
             //wait last job to finish
             if (sleeptime > 0) Thread.Sleep(sleeptime);
 
+            IRISConnect.Open();
+            IRISCommand cmd3 = new IRISCommand(sqlStatement3.ToString(), IRISConnect);
+            IRISDataReader Reader = cmd3.ExecuteReader();
+            Reader.Read();
+            long reccnt = Reader.GetInt64(0);
+
+            Reader.Close();
+            IRISConnect.Close();
+
+
+            Console.WriteLine("実件数　　：{0}", reccnt);
             Console.WriteLine("件数　　　：{0}", data.Length);
             Console.WriteLine("平均　　　：{0}", data.Mean());
             Console.WriteLine("中央値　　：{0}", data.Median());
