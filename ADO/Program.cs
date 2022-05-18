@@ -31,7 +31,7 @@ namespace ADO
 
             String ConnectionString = "Server = " + host
                 + "; Port = " + port + "; Namespace = " + Namespace
-                + "; Password = " + password + "; User ID = " + username + "; SharedMemory=false";
+                + "; Password = " + password + "; User ID = " + username + "; SharedMemory=false;pooling=true";
             IRISConnection IRISConnect = new IRISConnection();
             IRISConnect.ConnectionString = ConnectionString;
 
