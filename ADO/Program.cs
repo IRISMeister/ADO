@@ -1,4 +1,7 @@
-﻿using System;
+﻿#define MAINCASE
+//#define CASE2
+//#define CASE3
+using System;
 using InterSystems.Data.IRISClient;
 using System.Threading;
 using MathNet.Numerics.Statistics;
@@ -96,11 +99,17 @@ namespace ADO
             cmd2.Dispose();
             IRISConnect.Close();
 
-/*
+#if CASE2
             MainJob2 mainJob = new(ConnectionString, sleeptime, loopcnt);
             mainJob.ExecSync(data, 0);
-*/
+#endif
+#if CASE3
+            MainJob3 mainJob = new(ConnectionString, sleeptime, loopcnt);
+            mainJob.ExecSync(data, 0);
+#endif
 
+#if MAINCASE
+            // This case makes async calls to access IRIS.
             MainJob mainJob = new(ConnectionString, sleeptime);
             for (int r = 0; r < loopcnt; r++)
             {
@@ -119,6 +128,9 @@ namespace ADO
 
             //wait last job to finish
             if (sleeptime > 0) Thread.Sleep(sleeptime);
+#endif
+
+            Console.WriteLine("");
 
             IRISConnect.Open();
             IRISCommand cmd3 = new IRISCommand(sqlStatement3.ToString(), IRISConnect);
@@ -126,8 +138,22 @@ namespace ADO
             Reader.Read();
             long reccnt = Reader.GetInt64(0);
 
+            Console.WriteLine("IRIS Server Version:"+IRISConnect.ServerVersion);
             Reader.Close();
             IRISConnect.Close();
+
+#if MAINCASE
+            Console.WriteLine("MainJob() used.");
+#endif
+#if CASE2
+            Console.WriteLine""MainJob2() used.");
+#endif
+#if CASE3
+            Console.WriteLine("MainJob3() used.");
+#endif
+
+            Console.WriteLine("Sleep time in ms:" + sleeptime);
+            Console.WriteLine(ConnectionString);
 
 
             Console.WriteLine("実件数　　：{0}", reccnt);
@@ -141,9 +167,6 @@ namespace ADO
             Console.WriteLine("最小　　　：{0}", data.Minimum());
             Console.WriteLine("最大　　　：{0}", data.Maximum());
             Console.WriteLine("Percentile(95%)：{0}", data.Percentile(95));
-
-            Console.WriteLine("Sleep time in ms:" + sleeptime);
-            Console.WriteLine(ConnectionString);
 
         }
 
