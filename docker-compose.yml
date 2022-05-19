@@ -20,3 +20,16 @@ services:
     environment:
     - TZ=JST-9
     - ISC_CPF_MERGE_FILE=/ISC/cpf/merge.cpf
+
+  dotnet:
+    build:
+      context: dotnet50
+      dockerfile: Dockerfile
+    command: bash
+    restart: always
+    tty: true
+    environment:
+      - TZ=JST-9      
+    volumes:
+      - ./:/source
+      

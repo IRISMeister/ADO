@@ -108,3 +108,10 @@ USER>
 ```
 netsh.exe interface portproxy add v4tov4 listenaddress=192.168.11.2 listenport=1972 connectaddress=172.25.29.22 connectport=1972
 ```
+## how to build and run a dotnet client app within docker.
+```
+$ docker-compose exec dotnet /source/dotnet50/build.sh
+$ docker-compose exec dotnet dotnet /app/ADO.dll 100 iris 1972 5000
+
+```
+
