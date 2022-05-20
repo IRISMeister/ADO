@@ -12,7 +12,6 @@ VM使用時はメモリ割り当てを最低でも4GB、wsl2使用時は.wslconf
 memory=4GB
 ```
 
-
 ```
 $ docker stats
 CONTAINER ID   NAME           CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O   PIDS
@@ -38,16 +37,34 @@ Loop {
 ```
 作成されるテーブルサイズはごく小さく、IRISのキャッシュメモリ(2048 MB)にすべて載る程度。
 
-
 ## 実行方法
 
+### 書式  
 ADO.exe SleepTime(ms) host port
 
+### クライアントもコンテナを使用する場合
 
+```
+$ docker-compose up -d
+$ docker-compose exec dotnet /source/dotnet50/build.sh
+$ docker-compose exec dotnet dotnet /app/ADO.dll 100 iris 1972 5000
+$ docker-compose exec dotnet dotnet /app/ADO.dll 100 iris 1972 5000 > result.txt
+```
+
+### クライアントはWindowsネイティブで使用する場合
+
+```
+$ docker-compose up -d iris
+```
+
+Visual Studio等でビルド実行。  
 ```
 > ADO.exe 100 192.168.11.2 1972 
 > ADO.exe 100 192.168.11.2 1972 > result.txt
 ```
+
+### 計測時の注意
+
 初回実行時は、クエリプランの作成、データベースの拡張などが伴う可能性があるため、2回目以降を計測すること。  
 ADO.exeの出力に加えて、ネットワークの影響等を受けない計測値として、IRISの[SQL統計情報](https://docs.intersystems.com/iris20212/csp/docbook/DocBook.UI.Page.cls?KEY=GSQLOPT_sqlstmts#GSQLOPT_sqlstmts_det_statssec)を使用する。そのために、1回目(あるいは今まで実行してきた結果)の統計情報を消去するために、1回目のADO.exe実行の直後に、下記手順にて、クエリの統計情報をクリアしておく。以下、手順。
 
@@ -123,10 +140,5 @@ USER>
 ```
 netsh.exe interface portproxy add v4tov4 listenaddress=192.168.11.2 listenport=1972 connectaddress=172.25.29.22 connectport=1972
 ```
-## how to build and run a dotnet client app within docker.
-```
-$ docker-compose exec dotnet /source/dotnet50/build.sh
-$ docker-compose exec dotnet dotnet /app/ADO.dll 100 iris 1972 5000
 
-```
 
