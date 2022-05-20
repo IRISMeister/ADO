@@ -39,8 +39,16 @@ Loop {
 
 ## 実行方法
 
+製品版使用時にはInterSystemsのcontainerレポジトリへのログインおよびlicenseフォルダ下にiris.keyが必要です。  
+また、下記を変更してから実行してください。
+```
+前>    image: containers.intersystems.com/intersystems/iris-community:2021.2.0.651.0
+後>    image: containers.intersystems.com/intersystems/iris:2021.2.0.651.0
+```
+
 ### 書式  
-ADO.exe SleepTime(ms) host port
+ADO.exe SleepTime(ms) host port 繰り返し回数
+
 
 ### クライアントもコンテナを使用する場合
 
@@ -50,6 +58,7 @@ $ docker-compose exec dotnet /source/dotnet50/build.sh
 $ docker-compose exec dotnet dotnet /app/ADO.dll 100 iris 1972 5000
 $ docker-compose exec dotnet dotnet /app/ADO.dll 100 iris 1972 5000 > result.txt
 ```
+5000回の繰り返しには500秒ほどかかります。  
 
 ### クライアントはWindowsネイティブで使用する場合
 

@@ -2,7 +2,7 @@ version: '2'
 #
 services:
   iris:
-    image: containers.intersystems.com/intersystems/iris:2021.2.0.651.0
+    image: containers.intersystems.com/intersystems/iris-community:2021.2.0.651.0
     hostname: iris
 
     ports:
