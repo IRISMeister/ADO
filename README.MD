@@ -5,6 +5,21 @@ IRIS データベースバッファサイズ: 2048 MB
 Windows版:IRIS for Windows (x86-64) 2021.2.1 (Build 654U) Fri Mar 18 2022 06:09:35 EDT  
 コンテナ版:IRIS for UNIX (Ubuntu Server LTS for x86-64 Containers) 2021.2 (Build 651U) Mon Jan 31 2022 18:07:01 EST
 
+mem_limitによりIRISコンテナ,dotnetコンテナへの割り当てを1GBに設定している。  
+VM使用時はメモリ割り当てを最低でも4GB、wsl2使用時は.wslconfigにてメモリ設定を行うことが望ましい。
+```
+[wsl2]
+memory=4GB
+```
+
+
+```
+$ docker stats
+CONTAINER ID   NAME           CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O   PIDS
+2c833b431248   ado_iris_1     0.06%     319.5MiB / 1GiB     31.20%    3.43kB / 3.62kB   0B / 0B     58
+a097bb2b6f61   ado_dotnet_1   0.00%     1.688MiB / 1GiB     0.16%     1.11kB / 0B       0B / 0B     1
+```
+
 ## 処理概要
 テーブルを3つ作成し、Loop内を指定回数分繰り返す。
 ```
